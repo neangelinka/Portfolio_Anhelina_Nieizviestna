@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Віртуальне портфоліо — шаблон</title>
+
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+
+    <style>
+      html, body { margin:0; height:100%; overflow:hidden; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      #infoPanel {
+        position: fixed;
+        right: 16px;
+        top: 16px;
+        width: min(360px, calc(100vw - 32px));
+        max-height: calc(100vh - 32px);
+        overflow: auto;
+        background: rgba(18, 18, 18, 0.86);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 12px;
+        padding: 14px 14px 12px 14px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+        display: none;
+        z-index: 10;
+        backdrop-filter: blur(6px);
+      }
+      #infoPanel h3 { margin: 0 0 6px 0; font-size: 18px; line-height: 1.25; }
+      #infoPanel .meta { opacity: .85; font-size: 13px; margin-bottom: 10px; }
+      #infoPanel .desc { font-size: 14px; line-height: 1.45; white-space: pre-wrap; }
+      #infoPanel .closeRow { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom: 10px; }
+      #infoPanel button {
+        appearance:none; border:0; padding: 6px 10px; border-radius: 10px;
+        background: rgba(255,255,255,0.14); color:#fff; cursor:pointer;
+      }
+      #hint {
+        position: fixed;
+        left: 16px;
+        bottom: 16px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.88);
+        color: #111;
+        font-size: 13px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+        z-index: 10;
+        max-width: min(520px, calc(100vw - 32px));
+      }
+      #hint code { background: rgba(0,0,0,0.08); padding: 1px 6px; border-radius: 8px; }
+      a-scene { height: 100vh; width: 100vw; }
+    </style>
+  </head>
+
+  <body>
+    <div id="infoPanel" aria-live="polite">
+      <div class="closeRow">
+        <div style="font-weight:600; opacity:.9;">Інформація про роботу</div>
+        <button id="closeInfo" type="button">Закрити ✕</button>
+      </div>
+      <h3 id="infoTitle">—</h3>
+      <div class="meta" id="infoMeta">—</div>
+      <div class="desc" id="infoDesc">—</div>
+    </div>
+
+    <div id="hint">
+      Керування: <code>W A S D</code> — рух, <code>миша</code> — огляд, <code>клік</code> по роботі — опис.
+      <br/>Порада: якщо огляд “не ловить” мишу — клікніть у сцену.
+    </div>
+
+    <a-scene renderer="colorManagement: true; physicallyCorrectLights: true" background="color: #101010">
+      
+      <a-entity id="rig" position="0 0 0">
+        <a-camera id="camera"
+                  position="0 1.65 0"
+                  wasd-controls="acceleration: 32"
+                  look-controls="pointerLockEnabled: true"
+                  wall-collider>
+          <a-entity id="mouseCursor"
+                    cursor="rayOrigin: mouse"
+                    raycaster="objects: .clickable; far: 20">
+          </a-entity>
+        </a-camera>
+      </a-entity>
+
+      <a-entity id="lights"></a-entity>
+      <a-entity id="room" position="0 0 0"></a-entity>
+
+    </a-scene>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
